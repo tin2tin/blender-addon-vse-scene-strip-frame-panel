@@ -45,6 +45,7 @@ bl_info = {
     "blender": (2, 80, 0),
 }
 
+
 def draw(self, context):
     from bpy.utils import smpte_from_frame
 
@@ -59,6 +60,7 @@ def draw(self, context):
     is_effect = isinstance(strip, bpy.types.EffectSequence)
 
     # Get once.
+
     frame_start = strip.frame_start
     frame_final_start = strip.frame_final_start
     frame_final_end = strip.frame_final_end
@@ -90,14 +92,12 @@ def draw(self, context):
         strip_scene = scene.sequence_editor.active_strip.scene.name
         frame_original_start = bpy.data.scenes[str(strip_scene)].frame_start
         frame_original_frame = frame_current - (frame_start + frame_offset_start)
-        frame_original = (
-            frame_original_start + frame_offset_start + frame_original_frame
-        )
+        frame_original = frame_original_start + frame_offset_start + frame_original_frame
         scene = strip.scene
 
         split = col.split(factor=0.52 + max_factor, align=True)
         split.alignment = "RIGHT"
-        split.label(text="Original Frame")
+        split.label(text="Current Frame")
         split = split.split(factor=0.8 + max_factor, align=True)
         split.label(text="%14s" % smpte_from_frame(frame_original))
         split.alignment = "RIGHT"
@@ -109,7 +109,7 @@ def draw(self, context):
 
             split = col.split(factor=0.52 + max_factor, align=True)
             split.alignment = "RIGHT"
-            split.label(text="Start")
+            split.label(text="Source Start")
             split = split.split(factor=0.8 + max_factor, align=True)
             split.label(text="%14s" % smpte_from_frame(sta))
             split.alignment = "RIGHT"
